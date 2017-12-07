@@ -1,4 +1,4 @@
-![Start Screen](https://github.com/kanjain/Urban-Up_CMPE-273/blob/master/screenshot/download.png "Title Screen")
+![Start Screen](https://github.com/kanjain/Urban-Up/blob/master/screenshot/download.png "Title Screen")
 
 ## Urban Up - Hire a Contractor with just few simple clicks!
 
