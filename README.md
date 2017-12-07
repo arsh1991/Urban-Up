@@ -2,14 +2,22 @@
 
 ## Urban Up - Hire a Contractor with just few simple clicks!
 
-Urban Up helps you hire a contractor. It allows users to create, browse, and interact with professionals. It uses Ethereum Payments that allow a project owner to submit payment for an open request, and specify a service deposit. Any user can then commit to do the work by submitting the deposit. The project owner then has the choice to deduct or release parts of the ether held in the payment, depending on whether and how well the pro has done the work.
+Urban Up is an effort to create decentralised application like <b>ThumbTack</b>. 
+
+## Problem in current setup:
+
+Currently, all these apps are controlled by single authority which tracks work, payment ,and proffessional. So, there are chances where they can manipulate the services to their profits. 
+
+
+## Solution
+Our solution is to use Etherium Smart Contracts to decentralize the application and keep it open to anyone who wants to post project or work on it.
+It allows users to post projects and help you interact with professionals. Any user with Etherium account can then commit to do the work and earn. The project owner then has the choice to deduct or release parts of the ether held in the payment, depending on whether and how well the pro has done the work like real life.
 
 ### Installation
+Our project starts like Truffle Pet Shop and continues from there. We have included dependecieson lite-server which could be used to run the application.
+To get the access to ethereum node use the Metamask.
 
-Software required to run the project on a local web server. To get the access to ethereum node install the [metamask plugin](https://metamask.io/)
-
-Download and unzip the project and run the following commands :
+Clone the project and run the following commands :
 
 a ) npm install
-
 b ) npm run dev
