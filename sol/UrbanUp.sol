@@ -118,19 +118,11 @@ contract Project {
 
 	function recoverFunds()
 	public
-	onlyprojectOwnerOrPro()
-	notComplete(State.Complete) {
+	onlyprojectOwner()
+	inState(State.Open) {
 	    recovered = true;
-	    if(depositAmount !=0){
-	        pro.transfer(depositAmount);
-	        FundsReleased(depositAmount);
-	        projectOwner.transfer(projectAmount - depositAmount);
-	        FundsReleased(projectAmount - depositAmount);
-	        state = State.Cancelled;
-	        Closed();
-	    }
-		
-		selfdestruct(projectOwner);
+		FundsRecovered();
+		selfdestruct(payer);
 	}
 
 	function commit()
@@ -167,11 +159,10 @@ contract Project {
 		}
 	}
 
-	function release(uint percent)
+	function release(uint amount)
 	public
 	inState(State.InProgress)
 	onlyprojectOwner() {
-	    uint amount = percent/100 * projectAmount;
 		internalRelease(amount);
 	}
 
