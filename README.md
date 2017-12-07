@@ -2,7 +2,7 @@
 
 ## Urban Up - Hire a Contractor with just few simple clicks!
 
-Urban Up helps you hire a contractor. It allows users to create, browse, and interact with professionals. It uses Ethereum Payments that allow a payer to submit payment for an open request, and specify a service deposit. Any user can then commit to do the work by submitting the deposit. The payer then has the choice to deduct or release parts of the ether held in the payment, depending on whether and how well the worker has done the work.
+Urban Up helps you hire a contractor. It allows users to create, browse, and interact with professionals. It uses Ethereum Payments that allow a project owner to submit payment for an open request, and specify a service deposit. Any user can then commit to do the work by submitting the deposit. The project owner then has the choice to deduct or release parts of the ether held in the payment, depending on whether and how well the pro has done the work.
 
 ### Installation
 
