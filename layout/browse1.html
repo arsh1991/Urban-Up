@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Urban Up - Get Projects Done</title>
+    <!-- Bootstrap core CSS -->
+    <link href="../css/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom fonts for this template -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Slab:100,300,400,600,700,100italic,300italic,400italic,600italic,700italic" rel="stylesheet" type="text/css">
+    <!-- Custom styles for this template -->
+    <link href="../css/business-casual.css" rel="stylesheet">
+
+    <script src="//code.jquery.com/jquery-2.1.4.js"></script>
+    <script type="text/javascript" src='../script/lib/web3.js'></script>
+    <script type="text/javascript" src='../script/lib/constants.js'></script>
+    <script type="text/javascript" src='../script/abiDefinitions/bop_abi.js'></script>
+    <script type="text/javascript" src='../script/abiDefinitions/bop_factory_abi.js'></script>
+    <script type="text/javascript" src='../script/browse.js'></script>
+    <script type="text/javascript" src="../script/tableFilter.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        .black{color:black;}
+        .blue{color: #72adff;}
+        .red{color:orangered;}
+        .green{color: #708049;}
+        #resultTable {
+            /*font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;*/
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        #resultTable td, #resultTable th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        #resultTable tr:nth-child(even){background-color: #f2f2f2;}
+
+        #resultTable tr:hover {background-color: #ddd;}
+
+        #resultTable th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #b33c00;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+<div class="tagline-upper text-center text-heading text-shadow text-white mt-5 d-none d-lg-block">Urban Up</div>
+<div class="tagline-lower text-center text-expanded text-shadow text-uppercase text-white mb-5 d-none d-lg-block">Get Projects Done!</div>
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light bg-faded py-lg-4">
+    <div class="container">
+        <a class="navbar-brand text-uppercase text-expanded font-weight-bold d-lg-none" href="#">Start Bootstrap</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav mx-auto">
+                <li class="nav-item px-lg-4">
+                    <a class="nav-link text-uppercase text-expanded" href="../index.html">Home
+                        <span class="sr-only">(current)</span>
+                    </a>
+                </li>
+                <li class="nav-item px-lg-4">
+                    <a class="nav-link text-uppercase text-expanded" href="create1.html">Create Project</a>
+                </li>
+                <li class="nav-item px-lg-4">
+                    <a class="nav-link text-uppercase text-expanded" href="#">View Projects</a>
+                </li>
+                <li class="nav-item px-lg-4">
+                    <a class="nav-link text-uppercase text-expanded" href="../about.html">About</a>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container" style="min-width:1200px;!important">
+    <div class="bg-faded p-4 my-4">
+<!--         <div>
+            <input id="resetFilterButton" type="button" value="Reset Filter">
+        </div> -->
+        <div>
+            <table id= "resultTable">
+            <thead>
+                <tr>
+                    <th>State
+                        <select id="stateSelect">
+                            <option value="All">All</option>
+                            <option value="Open">Open</option>
+                            <option value="Committed">Committed</option>
+                            <option value="Open_Committed">Open/Committed</option>
+                            <option value="Expended">Expended</option>
+                        </select>
+                    </th>
+                    <th>
+                        Addresses<br>
+                        <input type="text" style="width:320px;" name="addressFilter" placeholder="Enter Address to filter">
+                    </th>
+                    <th>
+                        Title<!--<br>
+                <input type="text" name="titleFilter" placeholder="Enter Title to filter on.">-->
+                    </th>
+                    <th>
+                        <div><span class="blue">Payment Info</span></div>
+                        <div><span class="red">Held Deposit</span></div>
+
+                        <!--(<span id="held" class="sortable">Held<i class="fa"aria-hidden="true"></i></span>-->
+                        <!--<span id="deposit" class="sortable">Deposit<i class="fa"aria-hidden="true"></i>)</span>-->
+                    </th>
+                    <th>
+                        <div id="deposited"><span class="black">Deposited</span></div>
+                        <div id="burned"><span class="red">Burned</span></div>
+                        <div id="released"><span class="green">Released</span></div>
+                    </th>
+                    <th>
+                        <div><span id="autoRelease" class="black">AutoRelease</span></div>
+                        <div><span id="autoreleaseInterval" class="red">AutoReleaseInterval</span></div>
+                        <div><span id="autoreleaseTime" class="green">AutoReleaseTime</span></div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+            <tr class="mainTableRow">
+                <td class="state">
+                    loading...
+                </td>
+                <td>
+                    <a href='' class='contractAddress'>loading...</a>
+                    <br>
+                    Project Owner: <font color="#00aa00" class="payerAddress">loading...</font><br>
+                    Pro: <span class='workerAddress'></span>
+                    <!-- <a href='../layout/interact.html' class='workerAddress'></a><font color='#5d00ff' ></font> -->
+                </td>
+                <td class="title">
+                    loading...
+                </td>
+                <td width='15%'>
+                    <font color="blue">
+              <span class="balance">
+                loading...
+              </span> ETH
+                    </font>remaining payout<br>
+                    <font color="#cc7700">
+              <span class="serviceDeposit">
+                loading...
+              </span>
+                        ETH</font> service deposit<br>
+                </td>
+                <td>
+                    <font>
+                <span class="fundsDeposited">
+                  loading...
+                <span>
+                    </font><br>
+                    <font color='red'>
+                <span class="fundsBurned">
+                  loading...
+                </span>
+                    </font><br>
+                    <font color='green'>
+                <span class="fundsReleased">
+                  loading...
+                </span>
+                    </font><br>
+                </td>
+                <td>
+                    <font>
+                <span class="autoRelease">
+                  loading...
+                <span>
+                    </font><br>
+                    <font color='red'>
+                <span class="autoreleaseInterval">
+                  loading...
+                </span>
+                    </font><br>
+                    <span class="autoreleaseTime ">
+                  loading...
+                </span>
+                    </font><br>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        </div>
+    </div>
+
+</div>
+<!-- /.container -->
+
+<footer class="bg-faded text-center py-5">
+    <div class="container">
+        <p class="m-0">Copyright &copy; CMPE 273 Distributed Systems</p>
+    </div>
+</footer>
+</body>
+
+</html>

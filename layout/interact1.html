@@ -1,0 +1,222 @@
+/payerLog
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Urban Up - Get Projects Done</title>
+    <!-- Bootstrap core CSS -->
+    <link href="../css/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom fonts for this template -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Slab:100,300,400,600,700,100italic,300italic,400italic,600italic,700italic" rel="stylesheet" type="text/css">
+    <!-- Custom styles for this template -->
+    <link href="../css/business-casual.css" rel="stylesheet">
+
+    <script src="//code.jquery.com/jquery-2.1.4.js"></script>
+    <script type="text/javascript" src='../script/lib/web3.js'></script>
+    <script type="text/javascript" src='../script/lib/constants.js'></script>
+    <script type="text/javascript" src='../script/abiDefinitions/bop_abi.js'></script>
+    <script type="text/javascript" src='../script/abiDefinitions/bop_factory_abi.js'></script>
+    <script type="text/javascript" src='../script/interact.js'></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        .black{color:black;}
+        .blue{color: #72adff;}
+        .red{color:orangered;}
+        .green{color: #708049;}
+        table#resultTable span {  font-size:14px; }
+        table#resultTable td {  font-size:14px; }
+    </style>
+</head>
+
+<body>
+<div class="tagline-upper text-center text-heading text-shadow text-white mt-5 d-none d-lg-block">Urban Up</div>
+<div class="tagline-lower text-center text-expanded text-shadow text-uppercase text-white mb-5 d-none d-lg-block">Get Projects Done!</div>
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light bg-faded py-lg-4">
+    <div class="container">
+        <a class="navbar-brand text-uppercase text-expanded font-weight-bold d-lg-none" href="#">Start Bootstrap</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav mx-auto">
+                <li class="nav-item px-lg-4">
+                    <a class="nav-link text-uppercase text-expanded" href="../index.html">Home
+                        <span class="sr-only">(current)</span>
+                    </a>
+                </li>
+                <li class="nav-item px-lg-4">
+                    <a class="nav-link text-uppercase text-expanded" href="create1.html">Create Project</a>
+                </li>
+                <li class="nav-item px-lg-4">
+                    <a class="nav-link text-uppercase text-expanded" href="browse1.html">View Projects</a>
+                </li>
+                <li class="nav-item px-lg-4">
+                    <a class="nav-link text-uppercase text-expanded" href="../about.html">About</a>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="bg-faded p-4 my-4">
+        <div align="center" color='orange' id='verifiedOutput'>Verifying BOP...</div>
+        <table><tr>
+            <td width='100%'>
+                <div align='center' color=blue id='userAddress'></div>
+            </td>
+            <td width='60%'><td>
+        </tr></table>
+        <br>
+        <table id='BOPTable' border=1 width='90%' align='center'>
+            <tr width='100%'><td width='100%' align='center' colspan=2>
+                <b>Contract at address </b>
+                <font color="#0000ff">
+                    <span class="insertAddress">loading...</span>
+                    <br>
+                </font>
+                <small><a id="etherscanLink" href=''>View on etherscan.io</a></small><br>
+                <big><big><span id='BOPTitleOutput'>loading...</span></big><br><br>
+                    <strong>State: </strong><span id='BOPInfoOutput'>loading...</span><br><br>
+                    Remaining payout:<br><big><big><big><font color='blue'><span id='BOPBalanceOutput' color='blue'>loading...</span></font></big></big></big></big><br>
+                <form id='recoverFundsInputGroup' hidden='true'>
+                    <input type='button' value='Cancel Contract and Recover Funds' onClick='callRecoverFunds()'>
+                </form>
+                <br>
+                <table width='80%' id="resultTable">
+                    <tr width='100%'>
+                        <td width='20%' align='center'>
+                            <form id='payerFundsInputGroup'>
+                                <div class="form-group">
+                                <input class="form-control" type='text' name='amount' style="width:75px;"><br>
+                                <input  class="form-control" type='button' style="width:100px;" value='Add Funds' onClick='addFundsFromForm()'>
+                                </div>
+                            </form>
+                            <form id='payerBurnReleaseInputGroup' hidden='true'>
+                                <input type='button' value='Release' onClick='releaseFromForm()'>
+                                <input type='button' value='Burn' onClick='burnFromForm()'>
+                            </form>
+                        </td>
+                        <td>
+                            <table width='100%'>
+                                <tr width='100%'>
+                                    <td align='right'>Deposited:</td>
+                                    <td width=5px></td>
+                                    <td align='left'><span id='BOPFundsDepositedOutput'>loading...</span> </td>
+                                </tr><tr width='100%'>
+                                <td align='right'>Burned:</td>
+                                <td width=5px></td>
+                                <td align='left'><font color='red'>
+                                    <span id='BOPFundsBurnedOutput' color='red details'>loading...</span>
+                                </font>
+                                </td>
+                            </tr><tr width='100%'>
+                                <td align='right'>Released:</td>
+                                <td width=5px></td>
+                                <td align='left'><font color='green'><span id='BOPFundsReleasedOutput' color='blue'>loading...</span></font> </td>
+                            </tr>
+                                </tr><tr>
+                                <td> </td>
+                            </tr><tr width='100%'>
+                                <big>
+                                    <td align='right'></td>
+                                </big>
+                            </tr>
+                            </table>
+                        </td>
+                        <td width='20%' align='center'>
+                            Service Deposit:<br>
+                            <font color="#cc7700">
+                                <span id='BOPServiceDepositOutput' class=".details">loading...</span>
+                            </font>
+                        </td>
+                        <td align='center'>
+                            <!-- Default Release:<br>
+                            <font color="#cf7700">
+                            <span id='BOPDefaultActionOutput'>loading...</span>
+                            </font> -->
+                            <div id='autoReleaseInputGroup' hidden='true'>
+                                <input type='button' value='callDefaultAction' onClick='callDefaultAction()'>
+                            </div>
+                        </td>
+                        <td id='BOPTriggerTime' align='center' hidden='true'>
+                            Release Trigger Time:<br>
+                            <span id='BOPDefaultActionTriggerTime'></span>
+                        </td>
+                        <td id='BOPDefaultTimeoutLengthGroup' align='center' hidden='true'>
+                            Default Timeout Length: <br>
+                            <span id="BOPDefaultTimeoutLength"></span>
+                            <form id="delayDefaultActionForm" hidden='true'>
+                                <input type='button' value='delayDefaultAction' onClick='delayDefaultRelease()'>
+                            </form>
+                        </td>
+                    </tr>
+                </table>
+            </td></tr>
+            <tr>
+                <td width='50%' align='center'>
+                    Project Owner<br><span id='BOPPayerOutput'>loading...</span>
+                </td>
+                <td width='50%' align='center'>
+                    Pro<br>
+                    <span id='BOPWorkerOutput'>loading...</span>
+                    <div id='commitInputGroup' hidden='true'><button onclick="callCommit()">Commit to Project Contract</button></div>
+                </td>
+            </tr>
+            <tr>
+                <td align='center'>
+                    Project Owner Log<br>
+                    <div id='updatePayerStringInputGroup' hidden='true'>
+                        <button id='payerStringUpdateStartButton' onclick="startPayerStringUpdate()">Update</button>
+                        <textarea id='payerStringUpdateTextarea' rows='15' cols='50'></textarea><br>
+                        <button id='payerStringUpdateCommitButton' onClick="commitPayerStringUpdate()">Commit Update</button>
+                        <button id='payerStringUpdateCancelButton' onClick="cancelPayerStringUpdate()">Cancel</button>
+                    </div>
+                    <div id='BOPPayerStringOutput' align='left'></div>
+                </td>
+                <td align='center'>
+                    Pro Log<br>
+                    <div id='updateWorkerStringInputGroup' hidden='true'>
+                        <button id='workerStringUpdateStartButton' onclick="startWorkerStringUpdate()">Update</button>
+                        <textarea id='workerStringUpdateTextarea' rows='15' cols='50'></textarea><br>
+                        <button id='workerStringUpdateCommitButton' onClick="commitWorkerStringUpdate()">Commit Update</button>
+                        <button id='workerStringUpdateCancelButton' onClick="cancelWorkerStringUpdate()">Cancel</button>
+                    </div>
+                    <div id='BOPWorkerStringOutput' align='left'></div>
+                </td>
+            </tr>
+        </table>
+        <br>
+       <!-- <div class="container" id="etherscanContainer">
+            <div class="media">
+                <div class="media-right media-bottom">
+                    <img class="media-object" src="../imgs/etherscan_logo.png" alt="etherscanLogo"><br>
+                    <font color='red'>Note: Info below does not auto-update. Refresh for an updated event log.</font>
+                </div>
+            </div>
+       </div>-->
+        <div class="container">
+            <ul class="list-group" id="event-list">
+            </ul>
+        </div>
+
+
+    </div>
+
+</div>
+<!-- /.container -->
+
+<footer class="bg-faded text-center py-5">
+    <div class="container">
+        <p class="m-0">Copyright &copy; CMPE 273 Distributed Systems</p>
+    </div>
+</footer>
+</body>
+
+</html>

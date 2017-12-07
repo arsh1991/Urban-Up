@@ -1,0 +1,13 @@
+.sortable {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+#autoRelease {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+#resetFilterButton {
+    text-align: right;
+}
