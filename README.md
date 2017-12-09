@@ -10,12 +10,12 @@ Currently, all these apps are controlled by single authority which tracks work, 
 
 
 ## Solution
-Our solution is to use Etherium Smart Contracts to decentralize the application and keep it open to anyone who wants to post project or work on it.
-It allows users to post projects and help you interact with professionals. Any user with Etherium account can then commit to do the work and earn. The project owner then has the choice to deduct or release parts of the ether held in the payment, depending on whether and how well the pro has done the work like real life.
+Our solution is to use Ethereum Smart Contracts to decentralize the application and keep it open to anyone who wants to post project or work on it.
+It allows users to post projects and help you interact with professionals. Any user with Ethereum account can then commit to do the work and earn. The project owner then has the choice to deduct or release parts of the ether held in the payment, depending on whether and how well the pro has done the work like real life.
 
 ### Installation
-Our project starts like Truffle Pet Shop and continues from there. We have included dependecieson lite-server which could be used to run the application.
-To get the access to ethereum node use the Metamask.
+Our project starts like Truffle Pet Shop and continues from there. We have included dependecies on lite-server which could be used to run the application.
+To get the access to ethereum node , use the Metamask.
 
 Clone the project and run the following commands :
 
